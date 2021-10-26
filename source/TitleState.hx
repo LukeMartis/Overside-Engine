@@ -40,6 +40,8 @@ class TitleState extends MusicBeatState
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 
+	var versionLMAO:String = "1.0";
+
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
@@ -290,9 +292,13 @@ class TitleState extends MusicBeatState
 			{
 				// Check if version is outdated
 
-				var version:String = "v" + Application.current.meta.get('version');
+				var version:String = "v" + versionLMAO;
 
-				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
+				if (versionLMAO == "1.0")
+				{
+					FlxG.switchState(new MainMenuState());
+				}
+				else
 				{
 					FlxG.switchState(new OutdatedSubState());
 					trace('OLD VERSION!');
@@ -300,10 +306,6 @@ class TitleState extends MusicBeatState
 					trace(version.trim());
 					trace('cur ver');
 					trace(NGio.GAME_VER_NUMS.trim());
-				}
-				else
-				{
-					FlxG.switchState(new MainMenuState());
 				}
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);

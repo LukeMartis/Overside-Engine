@@ -334,6 +334,7 @@ class ChartingState extends MusicBeatState
 		stepperSusLength.name = 'note_susLength';
 
 		var applyLength:FlxButton = new FlxButton(100, 10, 'Apply');
+		// var noteInfo:FlxButton = new FlxButton(100, 10, 'Note Info', lmaoInfo);
 
 		tab_group_note.add(stepperSusLength);
 		tab_group_note.add(applyLength);
@@ -386,6 +387,13 @@ class ChartingState extends MusicBeatState
 
 		 */
 	}
+
+	/*
+	function lmaoInfo()
+	{
+		FlxG.switchState(new )
+	}
+	*/
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{

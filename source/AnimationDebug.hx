@@ -21,8 +21,10 @@ class AnimationDebug extends FlxState
 	var dumbTexts:FlxTypedGroup<FlxText>;
 	var animList:Array<String> = [];
 	var curAnim:Int = 0;
-	var isDad:Bool = true;
+	public static var isDad:Bool = true;
 	var daAnim:String = 'spooky';
+	public static var leftRight:Bool = false;
+	// ^ leftRight bool is for like, if your offsetting oppenent or bf, true means bf side, false means dad side.
 	var camFollow:FlxObject;
 
 	public function new(daAnim:String = 'spooky')

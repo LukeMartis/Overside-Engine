@@ -52,6 +52,7 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public static var currentDadLol:String = "dad";
 
 	var halloweenLevel:Bool = false;
 
@@ -115,6 +116,7 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
+	var missesInt:Int = 0;
 
 	public static var campaignScore:Int = 0;
 
@@ -729,9 +731,54 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		// what am I doing
+		if (dad.curCharacter == 'dad' || dad.curCharacter == 'parents-christmas')
+			{
+				healthBar.createFilledBar(0xFF910da8, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'gf' || dad.curCharacter == 'gf-pixel' || dad.curCharacter == 'gf-christmas' || dad.curCharacter == 'gf-car')
+			{
+				healthBar.createFilledBar(0xFFd6157c, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'mom' || dad.curCharacter == 'mom-car')
+			{
+				healthBar.createFilledBar(0xFFbf0bad, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'spooky')
+			{
+				healthBar.createFilledBar(0xFFe3780e, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'pico')
+			{
+				healthBar.createFilledBar(0xFF20ed09, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'monster' || dad.curCharacter == 'monster-christmas')
+			{
+				healthBar.createFilledBar(0xFFfff200, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'senpai' || dad.curCharacter == 'senpai-angry')
+			{
+				healthBar.createFilledBar(0xFFffa200, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'spirit')
+			{
+				healthBar.createFilledBar(0xFFf7007c, 0xFF4287f5);
+				add(healthBar);
+			}
+		if (dad.curCharacter == 'bf' || dad.curCharacter == 'bf-christmas' || dad.curCharacter == 'bf-pixel' || dad.curCharacter == 'bf-car')
+			{
+				healthBar.createFilledBar(0xFF4287f5, 0xFF4287f5);
+				add(healthBar);
+			}
 		// healthBar
-		add(healthBar);
+		
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
@@ -1364,7 +1411,11 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
+		scoreTxt.text = "Score:" + songScore + " | Misses:" + missesInt + " | Combo:" + combo;
+		if (missesInt == 0)
+			{
+				scoreTxt.text = "Score:" + songScore + " | Misses:" + missesInt + " | Full Combo:" + combo;
+			}
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -1679,6 +1730,9 @@ class PlayState extends MusicBeatState
 					if (daNote.tooLate || !daNote.wasGoodHit)
 					{
 						health -= 0.0475;
+						songScore -= 10;
+						missesInt += 1;
+						combo = 0;
 						vocals.volume = 0;
 					}
 
@@ -1749,6 +1803,8 @@ class PlayState extends MusicBeatState
 
 				if (storyDifficulty == 2)
 					difficulty = '-hard';
+				if (storyDifficulty == 3)
+					difficulty = '-insane';
 
 				trace('LOADING NEXT SONG');
 				trace(PlayState.storyPlaylist[0].toLowerCase() + difficulty);
@@ -2143,6 +2199,7 @@ class PlayState extends MusicBeatState
 			combo = 0;
 
 			songScore -= 10;
+			missesInt += 1;
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
@@ -2160,12 +2217,28 @@ class PlayState extends MusicBeatState
 			{
 				case 0:
 					boyfriend.playAnim('singLEFTmiss', true);
+					combo = 0;
+
+					songScore -= 10;
+					// missesInt += 1;
 				case 1:
 					boyfriend.playAnim('singDOWNmiss', true);
+					combo = 0;
+
+					songScore -= 10;
+					// missesInt += 1;
 				case 2:
 					boyfriend.playAnim('singUPmiss', true);
+					combo = 0;
+
+					songScore -= 10;
+					// missesInt += 1;
 				case 3:
 					boyfriend.playAnim('singRIGHTmiss', true);
+					combo = 0;
+
+					songScore -= 10;
+					// missesInt += 1;
 			}
 		}
 	}
